@@ -1,0 +1,182 @@
+# NOTE: About cops, refer to https://docs.rubocop.org/en/stable/
+
+# inherit_from: .rubocop_todo.yml
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+  Exclude:
+    - "bin/*"
+    # node_modules 以下には大量のファイルが含まれるため，無視することでパフォーマンスを向上させたい．
+    # また，拡張子が spec だが RSpec とは関係ないファイル (e.g. node_modules/node-sass/src/libsass/contrib/libsass.spec) があるため
+    # これも無視したい．
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "vagrantfile"
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - "db/schema.rb"
+
+Layout/ExtraSpacing:
+  Exclude:
+    - "config/sitemap.rb"
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: table
+  SupportedColonStyles: table
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - "db/schema.rb"
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/BlockLength:
+  Max: 10
+  Exclude:
+    - "Gemfile"
+    - "config/**/*"
+    - "db/fixtures/**/*"
+    - "db/migrate/**/*"
+    - "db/schema.rb"
+    - "lib/tasks/**/*"
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Max: 150
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/PerceivedComplexity:
+  Max: 7
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - e
+    - i
+    - n
+    - id
+
+# TODO: 設定が想定通りに適用されないので，Rubocop の update 後に再度検証する．
+Rails/RedundantForeignKey:
+  Enabled: false
+
+Rails/RequestReferer:
+  EnforcedStyle: referrer
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+
+# 日本語で context 以下のテスト内容を書けなくなるため
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/DescribedClass:
+  EnforcedStyle: described_class
+
+RSpec/ExampleLength:
+  Max: 20
+  CountAsOne:
+    - "array"
+    - "hash"
+    - "heredoc"
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NestedGroups:
+  Max: 4
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+# 日本語のコメントを許容する
+Style/AsciiComments:
+  Enabled: false
+
+# メソッドチェーンを続ける場合は do...end ではなく { } の形式にする
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
+# クラス，モジュールの定義は class Foo::Bar の形式にする
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - "config/application.rb"
+
+Style/Documentation:
+  Enabled: false
+
+# 中身のないメソッドも def, end を2行に分けて書く
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# 5桁以上の数値リテラルは _ で区切り視認性を向上する
+Style/NumericLiterals:
+  MinDigits: 5
+  Exclude:
+    - "db/schema.rb"
+
+# rescue するエラーのクラスについて，StandardError は明示しない
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+# メソッドの最後の引数に括弧を付けない
+# cf. db/fixtures/.rubocop.yml
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+
+# 配列の最後の要素に括弧を付けない
+# cf. db/fixtures/.rubocop.yml
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+# ハッシュリテラルの最後の値に括弧を付けない
+# cf. db/fixtures/.rubocop.yml
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+# 文字列の配列は %w() 記法を用いる
+Style/WordArray:
+  Exclude:
+    - "db/schema.rb"
+    - "db/migrate/**/*"
+
+RSpec/MultipleExpectations:
+  Max: 3
